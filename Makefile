@@ -6,7 +6,7 @@
 #    By: udelorme <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/14 11:43:18 by udelorme          #+#    #+#              #
-#    Updated: 2017/11/28 18:03:43 by udelorme         ###   ########.fr        #
+#    Updated: 2017/11/28 18:13:35 by udelorme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_COL = Colleen.c
 SRC_GRA = Grace.c
 SRC_SUL = Sully.c
 
-OBJ = $(SRC_COL:.c=.o)$(SRC_GRA:.c=.o)$(SRC_SUL:.c=.o)
+OBJ = $(SRC_COL:.c=.o) $(SRC_GRA:.c=.o) $(SRC_SUL:.c=.o)
 
 SRCDIR = ./
 OBJDIR = obj/
@@ -31,43 +31,36 @@ LIBDIR = libft/
 #SRCS = $(addprefix $(SRCDIR),$(SRC))
 #OBJS = $(addprefix $(OBJDIR),$(OBJ))
 
-all: $(NAME)
+all: $(COLLEEN) $(GRACE) $(SULLY)
 
-$(NAME): $(LIB) $(OBJS)
-	$(CC) $(LIBFLAGS) -o $(NAME) $^
+#$(NAME): $(LIB) $(OBJS)
+#	$(CC) $(LIBFLAGS) -o $(NAME) $^
 
 $(COLLEEN):
-	$(CC) $(LIBFLAGS) -c Colleen.c
-	$(CC) $(LIBFLAGS) Colleen.o -o Colleen
+	$(CC) $(FLAGS) -c Colleen.c
+	$(CC) $(FLAGS) Colleen.o -o Colleen
 
 $(GRACE):
-	$(CC) $(LIBFLAGS) -c Grace.c
-	$(CC) $(LIBFLAGS) Grace.o -o Grace
+	$(CC) $(FLAGS) -c Grace.c
+	$(CC) $(FLAGS) Grace.o -o Grace
 
 $(SULLY):
-	$(CC) $(LIBFLAGS) -c Sully.c
-	$(CC) $(LIBFLAGS) Sully.o -o Sully
+	$(CC) $(FLAGS) -c Sully.c
+	$(CC) $(FLAGS) Sully.o -o Sully
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	@mkdir $(OBJDIR) 2> /dev/null || true
-	$(CC) $(FLAGS) -I $(INCDIR) -I $(LIBDIR)includes -o $@ -c $<
+%.o: %.c
+	#@mkdir $(OBJDIR) 2> /dev/null || true
+	$(CC) $(FLAGS) -o $@ -c $<
 
 $(LIB):
 	make re -C $(LIBDIR)
 
 clean:
-	rm -rf $(OBJS)
-	@rmdir $(OBJDIR) 2> /dev/null || true
+	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf $(COLLEEN) $(GRACE) $(SULLY)
 
 re: fclean all
-
-lftclean:
-	$(MAKE) -C $(LIBDIR) clean
-
-lftfclean:
-	$(MAKE) -C $(LIBDIR) fclean
 
 .PHONY: all clean fclean re
