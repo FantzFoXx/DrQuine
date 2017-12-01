@@ -2,7 +2,7 @@ var fs = require('fs')
 var exec = require('child_process').exec
 var x = 5;
 function main() {
-	console.log(__filename.split('/').slice(-1)[0])
+	//console.log(__filename.split('/').slice(-1)[0])
 		if (__filename.split('/').slice(-1)[0] != 'Sully.js') {
 			x--;
 		}
